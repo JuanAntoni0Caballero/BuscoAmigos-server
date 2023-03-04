@@ -20,7 +20,7 @@ const planSchema = new Schema(
         },
         type: {
             type: String,
-            enum: ['Cultural', 'Naturaleza', 'Fiesta', 'Rural', 'Sol y playa', 'Gastronómico'],
+            enum: ['Cultural', 'Naturaleza', 'Fiesta', 'Rural', 'Sol y playa', 'Gastronomico'],
             required: [true, 'El tipo de viaje es obligatorio.'],
         },
         owner: {

@@ -2,7 +2,8 @@ const router = require("express").Router()
 
 const Plan = require('./../models/Plan.model')
 
-router.get("/getPlans", (req, res) => {
+
+router.get("/getPlans", (req, res, next) => {
 
     Plan
         .find()
@@ -28,7 +29,7 @@ router.post("/savePlan", (req, res, next) => {
 
     const { title, description, origin, destination, type } = req.body
 
-    Coaster
+    Plan
         .create({ title, description, origin, destination, type })
         .then(response => res.json(response))
         .catch(err => next(err))
