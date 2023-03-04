@@ -1,5 +1,5 @@
 {
-  "name": "BuscoAmigos",
+  "name": "BuscoAmigos-srv-server",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,13 +7,13 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "cloudinary": "^1.35.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "hbs": "^4.2.0",
     "mongoose": "^7.0.0",
-    "morgan": "^1.10.0",
-    "serve-favicon": "^2.5.0"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"

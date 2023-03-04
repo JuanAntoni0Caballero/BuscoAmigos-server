@@ -1,9 +1,16 @@
-const express = require('express');
-const router = express.Router();
+const router = require("express").Router()
 
-/* GET home page */
 router.get("/", (req, res, next) => {
-  res.render("index");
-});
+  res.json("All good in here")
+})
 
-module.exports = router;
+const authRoutes = require("./auth.routes")
+router.use("/auth", authRoutes)
+
+const userRoutes = require("./user.routes")
+router.use("/user", userRoutes)
+
+const planRoutes = require("./plan.routes")
+router.use("/plan", planRoutes)
+
+module.exports = router

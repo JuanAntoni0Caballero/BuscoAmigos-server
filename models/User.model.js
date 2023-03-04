@@ -1,32 +1,40 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
     username: {
       type: String,
       trim: true,
-      required: false,
-      unique: true
+      required: [true, 'El nombre de usuario es obligatorio']
     },
     email: {
       type: String,
-      required: true,
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
+      required: [true, 'El email de usuario es obligatorio']
     },
     password: {
       type: String,
-      required: true
+      required: [true, 'La contraseña de usuario es obligatoria']
+    },
+    avatar: {
+      type: String,
+      default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1676741904/avatars/avatar-default.jpg'
+    },
+    role: {
+      type: String,
+      enum: ['ADMIN', 'USER'],
+      default: 'USER'
     }
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
     timestamps: true
   }
-);
+)
 
-const User = model("User", userSchema);
+const User = model("user", userSchema)
 
-module.exports = User;
+module.exports = User
+
+
