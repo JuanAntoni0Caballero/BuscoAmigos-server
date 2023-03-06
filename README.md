@@ -6,14 +6,14 @@
 | POST         | /savePlan     | Create a new Plan             |
 | GET          | /plan/:id     | Matching ID plan     details  |
 | PUT          | /plan/:id/edi | Matching ID plan     edition  |
-| Delete       | /:id/delete   | Matching ID plan     deletion |
+| Delete       | /delete/:id   | Matching ID plan     deletion |
 
 
 # User rout
 ## Base URL /user
 | GET          | /:id          | Matching ID user     details  |
-| PUT          | /:id/edit     | Matching ID user     edition  |
-| Delete       | /:id/delete   | Matching ID plan     deletion |
+| PUT          | /edit/:id     | Matching ID user     edition  |
+| Delete       | /delete/:id   | Matching ID plan     deletion |
 
 
 # Auth rout

@@ -26,7 +26,12 @@ const userSchema = new Schema(
       type: String,
       enum: ['ADMIN', 'USER'],
       default: 'USER'
-    }
+    },
+    assessment: [{
+      ref: 'stars',
+      type: Schema.Types.ObjectId,
+    }],
+
   },
   {
     timestamps: true

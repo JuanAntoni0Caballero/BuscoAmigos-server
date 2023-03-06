@@ -7,17 +7,12 @@ const messageSchema = new Schema(
       required: [true, 'El mensaje es obligatorio.'],
       minlength: [20, 'El mensaje debe tener min. 20 caracteres.']
     },
-    owner: {
-      ref: 'user',
+    conversation: {
+      ref: 'conversation',
       type: Schema.Types.ObjectId,
-      required: true,
-    },
-    to: {
-      ref: 'user',
-      type: Schema.Types.ObjectId,
-      required: true,
     }
   },
+
   {
     timestamps: true
   }

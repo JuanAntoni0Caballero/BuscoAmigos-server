@@ -9,7 +9,7 @@ router.get("/getPlans", (req, res, next) => {
         .find()
         // .sort({ title: 1 })
         // .select({ title: 1, imageUrl: 1, owner: 1 })
-        .then(response => setTimeout(() => res.json(response), 1000))
+        .then(response => res.json(response))
         .catch(err => next(err))
 })
 

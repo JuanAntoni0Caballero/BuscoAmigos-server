@@ -11,6 +11,9 @@ const planSchema = new Schema(
             required: [true, 'La descripción es obligatoria.'],
             minlength: [20, 'La descripción debe tener min. 20 caracteres.']
         },
+        imgURL: {
+            type: String,
+        },
         origin: {
             type: String,
         },
@@ -24,8 +27,8 @@ const planSchema = new Schema(
             required: [true, 'El tipo de viaje es obligatorio.'],
         },
         owner: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            type: Schema.Types.ObjectId
         }
     },
     {
