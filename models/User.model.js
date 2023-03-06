@@ -20,13 +20,14 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1676741904/avatars/avatar-default.jpg'
+      default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/v1678120993/BuscoAmigos/default.jpg'
     },
     role: {
       type: String,
       enum: ['ADMIN', 'USER'],
       default: 'USER'
-    }
+    },
+
   },
   {
     timestamps: true
