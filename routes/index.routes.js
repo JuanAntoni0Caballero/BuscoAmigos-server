@@ -14,3 +14,4 @@ const planRoutes = require("./plan.routes")
 router.use("/plan", planRoutes)
 
 module.exports = router
+
