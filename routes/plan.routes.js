@@ -1,6 +1,6 @@
 const router = require("express").Router()
-
 const Plan = require('./../models/Plan.model')
+const fileUploader = require('../config/cloudinary.config')
 
 
 router.get("/getPlans", (req, res, next) => {

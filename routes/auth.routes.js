@@ -1,17 +1,15 @@
 const router = require("express").Router()
-
 const bcrypt = require('bcryptjs')
 const User = require("../models/User.model")
 const saltRounds = 10
-
 const jwt = require('jsonwebtoken')
 const { verifyToken } = require("../middlewares/verifyToken")
+const fileUploader = require('../config/cloudinary.config')
 
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', fileUploader.single('avatar'), (req, res, next) => {
 
     const { email, password, username } = req.body
-
     let avatar = req.file?.path
 
     if (password.length < 2) {
@@ -22,7 +20,6 @@ router.post('/signup', (req, res, next) => {
     User
         .findOne({ email })
         .then((foundUser) => {
-
             if (foundUser) {
                 res.status(400).json({ message: "User already exists." })
                 return

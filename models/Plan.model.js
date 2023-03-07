@@ -21,11 +21,10 @@ const planSchema = new Schema(
             type: String,
             required: [true, 'El destino es obligatorio.'],
         },
-        type: {
-            type: String,
-            enum: ['cultural', 'rural', 'fiesta', 'sol y playa', 'gastronomico', 'quedada de coches'],
-            required: [true, 'El tipo de viaje es obligatorio.'],
-        },
+        type: [{
+            ref: 'typePlan',
+            type: Schema.Types.ObjectId,
+        }],
         owner: {
             ref: 'User',
             type: Schema.Types.ObjectId
