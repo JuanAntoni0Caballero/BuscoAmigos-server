@@ -3,15 +3,15 @@ const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
 
 const Plan = require('./../models/Plan.model')
-const fileUploader = require('../config/cloudinary.config')
+const TypePlan = require('./../models/TypePlan.model')
+const { verifyToken } = require("../middlewares/verifyToken")
 
 
 router.get("/getPlans", (req, res, next) => {
 
     Plan
         .find()
-        // .sort({ title: 1 })
-        // .select({ title: 1, imageUrl: 1, owner: 1 })
+        .populate('typePlan')
         .then(response => res.json(response))
         .catch(err => next(err))
 })
@@ -28,13 +28,22 @@ router.get("/getOnePlan/:plan_id", (req, res, next) => {
 })
 
 
+router.get("/getTypePlan", (req, res, next) => {
+
+    TypePlan
+        .find()
+        .then(response => res.json(response))
+        .catch(err => next(err))
+})
+
+
 router.post("/savePlan", verifyToken, (req, res, next) => {
 
-    const { title, description, origin, destination, type } = req.body
+    const { title, description, origin, destination, typePlan } = req.body
     const { _id: owner } = req.payload
 
     Plan
-        .create({ title, description, origin, destination, type, owner })
+        .create({ title, description, origin, destination, typePlan, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
