@@ -6,27 +6,29 @@ const planSchema = new Schema(
             type: String,
             required: [true, 'El nombre es obligatorio.'],
         },
-        description: {
-            type: String,
-            required: [true, 'La descripción es obligatoria.'],
-            minlength: [20, 'La descripción debe tener min. 20 caracteres.']
-        },
-        imgURL: {
-            type: String,
-        },
         origin: {
             type: String,
+            default: 'Sin origen'
         },
         destination: {
             type: String,
             required: [true, 'El destino es obligatorio.'],
         },
-        type: [{
+        description: {
+            type: String,
+            required: [true, 'La descripción es obligatoria.'],
+            minlength: [20, 'La descripción debe tener min. 20 caracteres.']
+        },
+        // date: {
+        //     type: String,
+        //     required: [true, 'La fecha es obligatoria.'],
+        // },
+        typePlan: {
             ref: 'typePlan',
             type: Schema.Types.ObjectId,
-        }],
+        },
         owner: {
-            ref: 'User',
+            ref: 'user',
             type: Schema.Types.ObjectId
         }
     },
