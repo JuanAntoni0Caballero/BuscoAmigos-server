@@ -4,7 +4,6 @@ const { verifyToken } = require('../middlewares/verifyToken')
 
 const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
-const { verifyToken } = require("../middlewares/verifyToken")
 
 
 router.get("/getPlans", (req, res, next) => {

@@ -3,7 +3,6 @@ const router = require("express").Router()
 const { response } = require("../app")
 const { verifyToken } = require("../middlewares/verifyToken")
 const User = require('../models/User.model')
-const { verifyToken } = require("../middlewares/verifyToken")
 const fileUploader = require('../config/cloudinary.config')
 
 
