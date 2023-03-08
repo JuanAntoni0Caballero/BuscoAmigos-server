@@ -47,10 +47,7 @@ router.post("/savePlan", verifyToken, (req, res, next) => {
 })
 
 
-
-
-
-router.post("/editPlan/:plan_id", (req, res, next) => {
+router.put("/editPlan/:plan_id", (req, res, next) => {
 
     const { title, origin, destination, date, duration, typePlan, description } = req.body
     const { plan_id: id } = req.params

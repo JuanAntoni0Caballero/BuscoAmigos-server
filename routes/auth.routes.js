@@ -19,7 +19,7 @@ router.post('/signup', (req, res, next) => {
         .findOne({ email })
         .then((foundUser) => {
             if (foundUser) {
-                res.status(400).json({ message: "User already exists." })
+                res.status(400).json({ message: "Email already exists." })
                 return
             }
 
@@ -52,8 +52,8 @@ router.post('/login', (req, res, next) => {
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, username } = foundUser
-                const payload = { _id, email, username }
+                const { _id, username, email, avatar, role, assessment } = foundUser
+                const payload = { _id, username, email, avatar, role, assessment }
 
                 const authToken = jwt.sign(
                     payload,
