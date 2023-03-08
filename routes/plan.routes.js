@@ -1,10 +1,9 @@
 
 const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
-
 const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
-const { verifyToken } = require("../middlewares/verifyToken")
+
 
 
 router.get("/getPlans", (req, res, next) => {
@@ -39,11 +38,11 @@ router.get("/getTypePlan", (req, res, next) => {
 
 router.post("/savePlan", verifyToken, (req, res, next) => {
 
-    const { title, description, origin, destination, typePlan } = req.body
+    const { title, origin, destination, date, duration, typePlan, description } = req.body
     const { _id: owner } = req.payload
 
     Plan
-        .create({ title, description, origin, destination, typePlan, owner })
+        .create({ title, origin, destination, date, duration, typePlan, description, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 })

@@ -14,18 +14,21 @@ const planSchema = new Schema(
             type: String,
             required: [true, 'El destino es obligatorio.'],
         },
-        description: {
+        date: {
             type: String,
-            required: [true, 'La descripción es obligatoria.'],
-            minlength: [20, 'La descripción debe tener min. 20 caracteres.']
+            required: [true, 'La fecha es obligatoria.'],
         },
-        // date: {
-        //     type: String,
-        //     required: [true, 'La fecha es obligatoria.'],
-        // },
+        duration: {
+            type: String,
+            required: [true, 'La duración del viaje es obligatoria.'],
+        },
         typePlan: {
             ref: 'typePlan',
             type: Schema.Types.ObjectId,
+        },
+        description: {
+            type: String,
+            required: [true, 'La descripción es obligatoria.'],
         },
         owner: {
             ref: 'user',
