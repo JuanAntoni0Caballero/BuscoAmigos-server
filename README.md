@@ -39,6 +39,7 @@
 | /signup          | Register page          |           |
 | /create-plan     | New plan form page     | X         |
 | /profile         | User profile page      | X         |
+| /edit/profile    | Edit User profile page | X         |
 | /inbox           | Inbox page  	        | X         |
 | /contact         | Contact page           |           |
 | /gift	           | Gift page 	            | X         |

@@ -5,7 +5,6 @@ const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
 
 
-
 router.get("/getPlans", (req, res, next) => {
 
     Plan
