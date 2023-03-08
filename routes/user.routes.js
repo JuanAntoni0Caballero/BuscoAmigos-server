@@ -20,6 +20,8 @@ router.get("/getUsers", verifyToken, (req, res, next) => {
 router.get("/getOneUser/:user_id", verifyToken, (req, res, next) => {
 
     const { user_id } = req.params
+    const { _id: id } = req.payload
+
 
     User
         .findById(user_id)
@@ -32,6 +34,8 @@ router.get("/getOneUser/:user_id", verifyToken, (req, res, next) => {
 router.get("/profile", verifyToken, (req, res, next) => {
 
     const { _id: id } = req.payload
+
+    console.log(req.payload)
 
     User
         .findById(id)
