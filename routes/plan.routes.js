@@ -50,18 +50,16 @@ router.post("/savePlan", verifyToken, (req, res, next) => {
 
 
 
-// router.post("/editPlan/:plan_id", verifyToken, (req, res, next) => {
+router.post("/editPlan/:plan_id", (req, res, next) => {
 
-//     const { title, description, origin, destination, type } = req.body
-//     const { _id: owner } = req.payload
+    const { title, origin, destination, date, duration, typePlan, description } = req.body
+    const { plan_id: id } = req.params
 
-//     Plan
-
-//         .findByIdAndUpdate(plan => res.render('ruta', { plan }))
-//         .create({ title, description, origin, destination, type, owner })
-//         .then(response => res.json(response))
-//         .catch(err => next(err))
-// })
+    Plan
+        .findByIdAndUpdate(id, { title, origin, destination, date, duration, typePlan, description })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+})
 
 
 module.exports = router

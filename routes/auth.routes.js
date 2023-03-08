@@ -4,13 +4,11 @@ const User = require("../models/User.model")
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
 const { verifyToken } = require("../middlewares/verifyToken")
-const fileUploader = require('../config/cloudinary.config')
 
 
-router.post('/signup', fileUploader.single('avatar'), (req, res, next) => {
+router.post('/signup', (req, res, next) => {
 
-    const { email, password, username } = req.body
-    let avatar = req.file?.path
+    const { email, password, username, avatar } = req.body
 
     if (password.length < 2) {
         res.status(400).json({ message: 'Password must have at least 3 characters' })

@@ -13,5 +13,8 @@ router.use("/user", userRoutes)
 const planRoutes = require("./plan.routes")
 router.use("/plan", planRoutes)
 
+const uploadRoutes = require("./upload.routes")
+router.use("/upload", uploadRoutes)
+
 module.exports = router
 
