@@ -15,7 +15,7 @@ router.get("/getPlans", (req, res, next) => {
 })
 
 
-router.get("/getOnePlan/:plan_id", (req, res, next) => {
+router.get("/getOnePlan/:plan_id", verifyToken, (req, res, next) => {
 
     const { plan_id } = req.params
 
@@ -26,7 +26,7 @@ router.get("/getOnePlan/:plan_id", (req, res, next) => {
 })
 
 
-router.get("/getTypePlan", (req, res, next) => {
+router.get("/getTypePlan", verifyToken, (req, res, next) => {
 
     TypePlan
         .find()
