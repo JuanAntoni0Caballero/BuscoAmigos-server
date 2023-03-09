@@ -6,7 +6,6 @@ const { verifyToken } = require("../middlewares/verifyToken")
 const User = require('../models/User.model')
 // const fileUploader = require('../config/cloudinary.config')
 
-
 router.get("/getUsers", verifyToken, (req, res, next) => {
 
     User
@@ -17,19 +16,15 @@ router.get("/getUsers", verifyToken, (req, res, next) => {
         .catch(err => next(err))
 })
 
-
 router.get("/getOneUser/:user_id", verifyToken, (req, res, next) => {
 
     const { user_id } = req.params
-    const { _id: id } = req.payload
-
 
     User
         .findById(user_id)
         .then(response => res.json(response))
         .catch(err => next(err))
 })
-
 
 
 router.get("/profile", verifyToken, (req, res, next) => {
@@ -42,7 +37,6 @@ router.get("/profile", verifyToken, (req, res, next) => {
         .catch(err => next(err))
 })
 
-
 router.put('/editUser', verifyToken, (req, res, next) => {
 
     const { _id: id } = req.payload
@@ -52,15 +46,16 @@ router.put('/editUser', verifyToken, (req, res, next) => {
 
     // User
 
-    //     .findOne({ email })
-    //     .then((foundUser) => {
-    //         console.log(foundUser)
-    //         if (foundUser) {
-    //             res.status(400).json({ message: 'Email already exists' })
-    //             return
-    //         }
-    //         return User.findByIdAndUpdate(id, { username, email }, { new: true })
-    //     })
+    // .findOne({ email })
+    // .then((foundUser) => {
+    // console.log(foundUser)
+    // if (foundUser) {
+    // res.status(400).json({ message: 'Email already exists' })
+    // return
+    // }
+    // return User.findByIdAndUpdate(id, { username, email }, { new: true })
+    // })
+
     User.findByIdAndUpdate(id, { username, email }, { new: true })
         .then((user) => {
             const { username, email, role, avatar, assessment, _id } = user
@@ -80,6 +75,17 @@ router.put('/editUser', verifyToken, (req, res, next) => {
 })
 
 
+
+router.delete('/deleteUser', verifyToken, (req, res, next) => {
+
+
+    const { _id: id } = req.payload
+
+    User
+        .findByIdAndDelete(id)
+        .then(response => res.json({ msg: "User was deleted! :)" }))
+        .catch(err => next(err))
+})
 
 
 

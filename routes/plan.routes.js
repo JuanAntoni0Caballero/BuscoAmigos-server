@@ -59,4 +59,16 @@ router.put("/editPlan/:plan_id", (req, res, next) => {
 })
 
 
+router.delete('/deletePlan/:plan_id', (req, res, next) => {
+
+
+    const { plan_id: id } = req.params
+
+    Plan
+        .findByIdAndDelete(id)
+        .then(response => res.json({ msg: "Plan was deleted! :)" }))
+        .catch(err => next(err))
+})
+
+
 module.exports = router
