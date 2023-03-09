@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const { response } = require("../app")
 const { verifyToken } = require("../middlewares/verifyToken")
 const User = require('../models/User.model')
-// const fileUploader = require('../config/cloudinary.config')
 
 router.get("/getUsers", verifyToken, (req, res, next) => {
 
@@ -19,6 +18,10 @@ router.get("/getUsers", verifyToken, (req, res, next) => {
 router.get("/getOneUser/:user_id", verifyToken, (req, res, next) => {
 
     const { user_id } = req.params
+<<<<<<< HEAD
+=======
+    const { _id: id } = req.payload
+>>>>>>> 5a2d9ece2e7f5d56124eccb98b9a75c6d6d983bf
 
     User
         .findById(user_id)
@@ -40,10 +43,9 @@ router.get("/profile", verifyToken, (req, res, next) => {
 router.put('/editUser', verifyToken, (req, res, next) => {
 
     const { _id: id } = req.payload
-    const { username, email } = req.body
-    console.log(req.payload)
-    console.log(req.body)
+    const { username, email, avatar } = req.body
 
+<<<<<<< HEAD
     // User
 
     // .findOne({ email })
@@ -57,6 +59,10 @@ router.put('/editUser', verifyToken, (req, res, next) => {
     // })
 
     User.findByIdAndUpdate(id, { username, email }, { new: true })
+=======
+    User
+        .findByIdAndUpdate(id, { username, email, avatar }, { new: true })
+>>>>>>> 5a2d9ece2e7f5d56124eccb98b9a75c6d6d983bf
         .then((user) => {
             const { username, email, role, avatar, assessment, _id } = user
             const payload = { username, email, role, avatar, assessment, _id }
