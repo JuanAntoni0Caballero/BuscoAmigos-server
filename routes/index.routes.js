@@ -16,5 +16,11 @@ router.use("/plan", planRoutes)
 const uploadRoutes = require("./upload.routes")
 router.use("/upload", uploadRoutes)
 
+const messageRoutes = require('./message.routes')
+router.use('/messages', messageRoutes)
+
+const conversationRoutes = require('./conversation.routes')
+router.use('/conversation', conversationRoutes)
+
 module.exports = router
 

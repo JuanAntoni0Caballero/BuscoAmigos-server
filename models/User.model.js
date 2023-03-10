@@ -35,6 +35,14 @@ const userSchema = new Schema(
       ref: 'stars',
       type: Schema.Types.ObjectId,
     }],
+    message: [{
+      ref: 'message',
+      type: Schema.Types.ObjectId,
+    }],
+    conversation: {
+      ref: 'conversation',
+      type: Schema.Types.ObjectId,
+    }
 
   },
   {

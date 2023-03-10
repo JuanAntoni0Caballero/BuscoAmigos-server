@@ -1,21 +1,10 @@
-
 const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
 const Message = require('../models/Message.model')
-const Conversation = require('../models/Conversation.model')
 
 
-router.get("/getConversation", verifyToken, (req, res, next) => {
 
-    Conversation
-        .find()
-        .populate('menssage')
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-
-router.get("/getMenssages", verifyToken, (req, res, next) => {
+router.get("/getMessages", verifyToken, (req, res, next) => {
 
     Message
         .find()
@@ -24,13 +13,13 @@ router.get("/getMenssages", verifyToken, (req, res, next) => {
 })
 
 
-router.post("/saveMenssage", verifyToken, (req, res, next) => {
+router.post("/saveMessage", (req, res, next) => {
 
-    const { menssage, conversation } = req.body
-    const { _id: owner } = req.payload
+    const { message, conversation } = req.body
+    // const { _id: owner } = req.payload
 
     Message
-        .create({ menssage, conversation, owner })
+        .create({ message, conversation })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
