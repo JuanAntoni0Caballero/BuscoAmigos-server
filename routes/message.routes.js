@@ -5,33 +5,32 @@ const Message = require('../models/Message.model')
 const Conversation = require('../models/Conversation.model')
 
 
+router.get("/getConversation", verifyToken, (req, res, next) => {
 
-
-router.get("/getPlans", verifyToken, (req, res, next) => {
-
-    Message.find()
-        .populate('conversacion')
+    Conversation
+        .find()
+        .populate('menssage')
         .then(response => res.json(response))
         .catch(err => next(err))
 })
 
-router.get("/getConversacion", verifyToken, (req, res, next) => {
 
-    Conversation
+router.get("/getMenssages", verifyToken, (req, res, next) => {
+
+    Message
         .find()
         .then(response => res.json(response))
         .catch(err => next(err))
 })
 
 
+router.post("/saveMenssage", verifyToken, (req, res, next) => {
 
-router.post("/savePlan", verifyToken, (req, res, next) => {
-
-    const { title, origin, destination, date, duration, typePlan, description } = req.body
+    const { menssage, conversation } = req.body
     const { _id: owner } = req.payload
 
     Message
-        .create({ title, origin, destination, date, duration, typePlan, description, owner })
+        .create({ menssage, conversation, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
@@ -43,7 +42,7 @@ router.delete('/deleteMessage/:message_id', (req, res, next) => {
 
     Message
         .findByIdAndDelete(id)
-        .then(response => res.json({ msg: "Plan was deleted! :)" }))
+        .then(response => res.json(response))
         .catch(err => next(err))
 })
 
