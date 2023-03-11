@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
 const Message = require('../models/Message.model')
+const Conversation = require('../models/Conversation.model')
 
 
 
@@ -13,19 +14,21 @@ router.get("/getMessages", verifyToken, (req, res, next) => {
 })
 
 
-router.post("/saveMessage", (req, res, next) => {
+router.post("/createMessage/:conversation_id", verifyToken, (req, res, next) => {
 
-    const { message, conversation } = req.body
-    // const { _id: owner } = req.payload
+    const { content } = req.body
+    const { _id: owner } = req.payload
+    const { conversation_id } = req.params
 
     Message
-        .create({ message, conversation })
+        .create({ content, owner })
+        .then(response => Conversation.findByIdAndUpdate(conversation_id, { $push: { messages: response._id } }, { new: true }))
         .then(response => res.json(response))
         .catch(err => next(err))
 })
 
 
-router.delete('/deleteMessage/:message_id', (req, res, next) => {
+router.delete('/deleteMessage/:message_id', verifyToken, (req, res, next) => {
 
     const { message_id: id } = req.params
 

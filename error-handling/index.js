@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   app.use((err, req, res, next) => {
 
-    console.error("ERROR", req.method, req.path, err);
+    console.error("ERROR", req.method, req.path, err)
 
     if (err.code && err.code === 11000) {
       res.status(409).json({ errorMessages: ['El registro ya se encuentra en la base de datos'] })

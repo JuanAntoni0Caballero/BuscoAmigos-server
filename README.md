@@ -5,7 +5,7 @@
 | GET          | /getPlan        | Plan list                 |
 | GET          | /details/:id    | Matching ID plan details  |
 | GET          | /getOnePlan/:id | Matching ID plan details  |
-| POST         | /savePlan       | Create a new Plan         |
+| POST         | /createPlan       | Create a new Plan         |
 | PUT          | /edit/:id       | Matching ID plan edition  |
 | Delete       | /delete/:id     | Matching ID plan deletion |
 

@@ -5,7 +5,7 @@ const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
 
 
-router.get("/getPlans", verifyToken, (req, res, next) => {
+router.get("/getPlans", (req, res, next) => {
 
     const { origin, destination, date, duration, typePlan } = req.query
 
@@ -25,7 +25,7 @@ router.get("/getPlans", verifyToken, (req, res, next) => {
 })
 
 
-router.get("/getOnePlan/:plan_id", verifyToken, (req, res, next) => {
+router.get("/getOnePlan/:plan_id", (req, res, next) => {
 
     const { plan_id } = req.params
 
@@ -36,7 +36,7 @@ router.get("/getOnePlan/:plan_id", verifyToken, (req, res, next) => {
 })
 
 
-router.get("/getOriginPlan", verifyToken, (req, res, next) => {
+router.get("/getOriginPlan", (req, res, next) => {
 
     let originArray = []
 
@@ -52,7 +52,7 @@ router.get("/getOriginPlan", verifyToken, (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get("/getDestinationPlan", verifyToken, (req, res, next) => {
+router.get("/getDestinationPlan", (req, res, next) => {
 
     let destinationArray = []
 
@@ -69,7 +69,7 @@ router.get("/getDestinationPlan", verifyToken, (req, res, next) => {
 })
 
 
-router.get("/getTypePlan", verifyToken, (req, res, next) => {
+router.get("/getTypePlan", (req, res, next) => {
 
     TypePlan
         .find()
@@ -78,7 +78,7 @@ router.get("/getTypePlan", verifyToken, (req, res, next) => {
 })
 
 
-router.post("/savePlan", verifyToken, (req, res, next) => {
+router.post("/createPlan", verifyToken, (req, res, next) => {
 
     const { title, origin, destination, date, duration, typePlan, description } = req.body
     const { _id: owner } = req.payload

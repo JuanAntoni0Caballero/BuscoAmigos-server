@@ -73,7 +73,4 @@ router.delete('/deleteUser', verifyToken, (req, res, next) => {
         .catch(err => next(err))
 })
 
-
-
-
 module.exports = router
