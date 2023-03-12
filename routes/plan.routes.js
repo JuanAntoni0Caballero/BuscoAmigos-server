@@ -28,11 +28,14 @@ router.get("/getPlans", (req, res, next) => {
 router.get("/getOnePlan/:plan_id", (req, res, next) => {
 
     const { plan_id } = req.params
+    // const { typePlan } = req.query
 
     Plan
         .findById(plan_id)
+        .populate('typePlan')
         .then(response => res.json(response))
         .catch(err => next(err))
+
 })
 
 

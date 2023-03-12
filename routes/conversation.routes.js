@@ -2,36 +2,53 @@
 const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
 const Conversation = require('../models/Conversation.model')
+const Plan = require('../models/Plan.model')
+const Message = require('../models/Message.model')
 
-
-
-router.post("/createConversation/:receiver", verifyToken, (req, res, next) => {
+router.post("/createConversation/:plan_id", verifyToken, (req, res, next) => {
 
     const { _id: sender } = req.payload
-    const { receiver } = req.params
-    //const { plan_id } = req.body
+    const { plan_id } = req.params
 
-    Conversation
-        .findOne({ $and: [{ members: sender }, { members: receiver }] })
-        .then(conversation => {
-            if (conversation) {
-                res.json(conversation)
-            } else {
-                Conversation
-                    .create({ members: [sender, receiver] })
-                    .then(newConversation => res.json(newConversation))
-                    .catch(err => next(err))
-            }
+    Plan
+        .findById(plan_id)
+        .then(plan => {
+            const receiver = plan.owner
+
+            Conversation
+                .findOne({ $and: [{ members: sender }, { members: receiver }] })
+                .then(conversation => {
+                    if (conversation) {
+                        res.json(conversation)
+                    } else {
+                        Conversation
+                            .create({ members: [sender, receiver], plan: plan_id })
+                            .then(newConversation => res.json(newConversation))
+                            .catch(err => next(err))
+                    }
+                })
+                .catch(err => next(err))
         })
         .catch(err => next(err))
 })
 
 
+router.get("/getAllConversations", verifyToken, (req, res, next) => {
 
-router.get("/getConversation/:conversation_id", (req, res, next) => {
+    const { _id: user } = req.payload
+
+    Conversation
+        .find({ members: { $elemMatch: { $in: [user] } } })
+        .populate("plan")
+        .then(response => res.json(response))
+        .catch(err => next(err))
+})
+
+
+router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) => {
 
     const { conversation_id: id } = req.params
-    const { plan_id } = req.params
+    const { _id: user_id } = req.payload
 
 
     Conversation
@@ -40,33 +57,29 @@ router.get("/getConversation/:conversation_id", (req, res, next) => {
             path: "members",
             select: "username"
         })
-        .populate({
-            path: "plan",
-            select: "plan"
-        })
+        .populate("plan")
         .populate({
             path: "messages",
-            select: "content createdAt",
+            select: "content createdAt read",
             populate: {
                 path: "owner",
                 select: "username"
             }
         })
-        .then(response => res.json(response))
+        .then(response => {
+            response.messages.map(elm => {
+
+                // if (user_id != elm.owner._id && !elm.read) {
+                //     await Message.updateOne({ _id: message._id }, { read: true })
+                // }
+                if (user_id != elm.owner._id && !elm.read) {
+                    Message.updateMany(elm._id, { read: true })
+                }
+            })
+            res.json(response)
+        })
         .catch(err => next(err))
 })
-
-
-// router.post("/createConversation", (req, res, next) => {
-
-//     const { message, owner, to } = req.body
-//     // const { _id: owner } = req.payload
-
-//     Conversation
-//         .create({ message, owner, to })
-//         .then(response => res.json(response))
-//         .catch(err => next(err))
-// })
 
 
 router.delete('/deleteConversation/:conversation_id', verifyToken, (req, res, next) => {

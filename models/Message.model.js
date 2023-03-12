@@ -9,9 +9,12 @@ const messageSchema = new Schema(
     owner: {
       ref: 'user',
       type: Schema.Types.ObjectId,
+    },
+    read: {
+      type: Boolean,
+      default: false,
     }
   },
-
   {
     timestamps: true
   }
