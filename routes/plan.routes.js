@@ -5,6 +5,21 @@ const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
 
 
+router.get("/getRandomPlans", (req, res, next) => {
+
+    Plan
+        .aggregate([{ $sample: { size: 4 } }])
+        .then(response => {
+            const promises = response.map(elm => Plan.findById(elm._id).populate('typePlan'))
+            Promise
+                .all(promises)
+                .then((plans) => res.json(plans))
+                .catch(err => next(err))
+        })
+        .catch(err => next(err))
+})
+
+
 router.get("/getPlans", (req, res, next) => {
 
     const { origin, destination, date, duration, typePlan } = req.query
@@ -28,7 +43,6 @@ router.get("/getPlans", (req, res, next) => {
 router.get("/getOnePlan/:plan_id", (req, res, next) => {
 
     const { plan_id } = req.params
-    // const { typePlan } = req.query
 
     Plan
         .findById(plan_id)
@@ -54,6 +68,7 @@ router.get("/getOriginPlan", (req, res, next) => {
         .then(response => res.json(response))
         .catch(err => next(err))
 })
+
 
 router.get("/getDestinationPlan", (req, res, next) => {
 

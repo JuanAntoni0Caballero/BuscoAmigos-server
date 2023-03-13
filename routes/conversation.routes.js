@@ -40,7 +40,7 @@ router.get("/getAllConversations", verifyToken, (req, res, next) => {
 
     Conversation
         .find({ members: { $elemMatch: { $in: [user] } } })
-        .populate("plan")
+        .populate("plan messages members")
         .then(response => res.json(response))
         .catch(err => next(err))
 })
