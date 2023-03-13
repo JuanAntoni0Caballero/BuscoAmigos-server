@@ -5,10 +5,10 @@ const { verifyToken } = require("../middlewares/verifyToken")
 
 router.post('/signup', (req, res, next) => {
 
-    const { email, password, username, avatar } = req.body
+    const { email, password, username, avatar, plan } = req.body
 
     User
-        .create({ email, password, username, avatar })
+        .create({ email, password, username, avatar, plan })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))
 })

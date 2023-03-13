@@ -42,6 +42,10 @@ const userSchema = new Schema(
     conversation: {
       ref: 'conversation',
       type: Schema.Types.ObjectId,
+    },
+    plan: {
+      ref: 'plan',
+      type: Schema.Types.ObjectId,
     }
 
   },
