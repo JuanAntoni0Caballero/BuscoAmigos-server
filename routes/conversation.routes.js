@@ -60,7 +60,7 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
         .populate("plan")
         .populate({
             path: "messages",
-            select: "content createdAt read",
+            select: "content read createdAt",
             populate: {
                 path: "owner",
                 select: "username"
@@ -68,15 +68,11 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
         })
         .then(response => {
             response.messages.map(elm => {
-
-                // if (user_id != elm.owner._id && !elm.read) {
-                //     await Message.updateOne({ _id: message._id }, { read: true })
-                // }
                 if (user_id != elm.owner._id && !elm.read) {
-                    Message.updateMany(elm._id, { read: true })
+                    Message.findByIdAndUpdate(elm._id, { $set: { read: true } }, { new: true })
                 }
+                res.json(response)
             })
-            res.json(response)
         })
         .catch(err => next(err))
 })
