@@ -112,7 +112,7 @@ router.delete('/deletePlan/:plan_id', verifyToken, (req, res, next) => {
 
     Plan
         .findByIdAndDelete(id)
-        .then(() => res.json({ msg: "Plan was deleted! :)" }))
+        .then(() => res.json({ msg: "Plan was deleted!" }))
         .catch(err => next(err))
 })
 

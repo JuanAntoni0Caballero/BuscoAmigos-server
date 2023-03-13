@@ -69,7 +69,7 @@ router.delete('/deleteUser', verifyToken, (req, res, next) => {
 
     User
         .findByIdAndDelete(id)
-        .then(response => res.json({ msg: "User was deleted! :)" }))
+        .then(response => res.json({ msg: "User was deleted!" }))
         .catch(err => next(err))
 })
 

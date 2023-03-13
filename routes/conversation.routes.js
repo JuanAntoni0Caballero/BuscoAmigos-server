@@ -4,6 +4,7 @@ const { verifyToken } = require('../middlewares/verifyToken')
 const Conversation = require('../models/Conversation.model')
 const Plan = require('../models/Plan.model')
 const Message = require('../models/Message.model')
+const { response, resource } = require("../app")
 
 router.post("/createConversation/:plan_id", verifyToken, (req, res, next) => {
 
@@ -47,37 +48,53 @@ router.get("/getAllConversations", verifyToken, (req, res, next) => {
 
 router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) => {
 
-    const { conversation_id: id } = req.params
+    const { conversation_id } = req.params
     const { _id: user_id } = req.payload
+
+    
 
 
     Conversation
-        .findById(id)
-        .populate({
-            path: "members",
-            select: "username"
-        })
-        .populate("plan")
+        .findById(conversation_id)
         .populate({
             path: "messages",
-            select: "content createdAt read",
+            select: "read",
             populate: {
                 path: "owner",
                 select: "username"
             }
         })
         .then(response => {
-            response.messages.map(elm => {
+            if (!response) {
+                res.status(400).json({ errorMessages: ["Conversación no encontrada."] })
+                return
+            }
 
-                // if (user_id != elm.owner._id && !elm.read) {
-                //     await Message.updateOne({ _id: message._id }, { read: true })
-                // }
+            const promises = response.messages.map(elm => {
+
                 if (user_id != elm.owner._id && !elm.read) {
-                    Message.updateMany(elm._id, { read: true })
+                    return Message.findByIdAndUpdate(elm._id, { read: true }, { new: true })
+                } else {
+                    return Message.findById(elm._id)
                 }
             })
-            res.json(response)
+
+            return Promise.all(promises)
+
         })
+        .then(() => Conversation.findById(conversation_id)
+            .populate("members")
+            .populate("plan")
+            .populate({
+                path: "messages",
+                select: "content createdAt read",
+                populate: {
+                    path: "owner",
+                    select: "username"
+                }
+            })
+        )
+        .then(response => res.json(response))
         .catch(err => next(err))
 })
 
@@ -94,3 +111,4 @@ router.delete('/deleteConversation/:conversation_id', verifyToken, (req, res, ne
 
 
 module.exports = router
+
