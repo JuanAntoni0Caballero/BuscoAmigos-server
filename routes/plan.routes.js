@@ -40,6 +40,18 @@ router.get("/getPlans", (req, res, next) => {
 })
 
 
+router.get("/getMyPlans", verifyToken, (req, res, next) => {
+
+    const { _id: owner_id } = req.payload
+
+    Plan
+        .find({ owner: owner_id })
+        .populate('typePlan')
+        .then(response => res.json(response))
+        .catch(err => next(err))
+})
+
+
 router.get("/getOnePlan/:plan_id", (req, res, next) => {
 
     const { plan_id } = req.params
@@ -49,7 +61,6 @@ router.get("/getOnePlan/:plan_id", (req, res, next) => {
         .populate('typePlan')
         .then(response => res.json(response))
         .catch(err => next(err))
-
 })
 
 
@@ -122,7 +133,6 @@ router.put("/editPlan/:plan_id", verifyToken, (req, res, next) => {
 
 router.delete('/deletePlan/:plan_id', verifyToken, (req, res, next) => {
 
-
     const { plan_id: id } = req.params
 
     Plan
@@ -130,6 +140,5 @@ router.delete('/deletePlan/:plan_id', verifyToken, (req, res, next) => {
         .then(() => res.json({ msg: "Plan was deleted!" }))
         .catch(err => next(err))
 })
-
 
 module.exports = router
