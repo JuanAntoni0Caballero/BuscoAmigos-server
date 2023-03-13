@@ -8,7 +8,7 @@ const TypePlan = require('./../models/TypePlan.model')
 router.get("/getRandomPlans", (req, res, next) => {
 
     Plan
-        .aggregate([{ $sample: { size: 4 } }])
+        .aggregate([{ $sample: { size: 20 } }])
         .then(response => {
             const promises = response.map(elm => Plan.findById(elm._id).populate('typePlan'))
             Promise
