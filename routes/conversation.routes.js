@@ -51,7 +51,7 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
     const { conversation_id } = req.params
     const { _id: user_id } = req.payload
 
-    
+
 
 
     Conversation
@@ -77,6 +77,7 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
                 } else {
                     return Message.findById(elm._id)
                 }
+                res.json(response)
             })
 
             return Promise.all(promises)
