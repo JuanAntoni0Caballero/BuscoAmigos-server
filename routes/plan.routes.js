@@ -3,6 +3,8 @@ const router = require("express").Router()
 const { verifyToken } = require('../middlewares/verifyToken')
 const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
+const User = require('./../models/User.model')
+
 
 
 router.get("/getRandomPlans", (req, res, next) => {
@@ -122,6 +124,7 @@ router.post("/createPlan", verifyToken, (req, res, next) => {
 
     Plan
         .create({ title, origin, destination, date, duration, typePlan, description, owner })
+        // .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
         .then(response => res.json(response))
         .catch(err => next(err))
 })
