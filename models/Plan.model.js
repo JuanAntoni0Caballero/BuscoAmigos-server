@@ -8,7 +8,7 @@ const planSchema = new Schema(
         },
         origin: {
             type: String,
-            default: 'Sin origen'
+            required: [true, 'El origen es obligatorio.'],
         },
         destination: {
             type: String,
@@ -20,7 +20,7 @@ const planSchema = new Schema(
         },
         duration: {
             type: String,
-            required: [true, 'La duración del viaje es obligatoria.'],
+            default: '0'
         },
         typePlan: {
             ref: 'typePlan',

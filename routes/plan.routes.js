@@ -22,7 +22,7 @@ router.get("/getRandomPlans", (req, res, next) => {
 
 router.get("/getPlans", (req, res, next) => {
 
-    const { origin, destination, date, duration, typePlan } = req.query
+    const { origin, destination, date, duration, typePlan, sortOrigin, sortDestination, sortDate, sortDuration } = req.query
 
     let filter = {}
 
@@ -32,8 +32,16 @@ router.get("/getPlans", (req, res, next) => {
     if (duration) filter.duration = duration
     if (typePlan) filter.typePlan = typePlan
 
+    let sort = {}
+
+    if (sortOrigin) sort.origin = sortOrigin
+    if (sortDestination) sort.destination = sortDestination
+    if (sortDate) sort.date = sortDate
+    if (sortDuration) sort.duration = sortDuration
+
     Plan
         .find(filter)
+        .sort(sort)
         .populate('typePlan')
         .then(response => res.json(response))
         .catch(err => next(err))
