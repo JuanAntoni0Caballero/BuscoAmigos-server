@@ -119,11 +119,11 @@ router.get("/getTypePlan", (req, res, next) => {
 
 router.post("/createPlan", verifyToken, (req, res, next) => {
 
-    const { title, origin, destination, date, duration, typePlan, description } = req.body
+    const { title, origin, destination, date, duration, typePlan, image, description } = req.body
     const { _id: owner } = req.payload
 
     Plan
-        .create({ title, origin, destination, date, duration, typePlan, description, owner })
+        .create({ title, origin, destination, date, duration, typePlan, image, description, owner })
         // .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -132,11 +132,11 @@ router.post("/createPlan", verifyToken, (req, res, next) => {
 
 router.put("/editPlan/:plan_id", verifyToken, (req, res, next) => {
 
-    const { title, origin, destination, date, duration, typePlan, description } = req.body
+    const { title, origin, destination, date, duration, typePlan, image, description } = req.body
     const { plan_id: id } = req.params
 
     Plan
-        .findByIdAndUpdate(id, { title, origin, destination, date, duration, typePlan, description })
+        .findByIdAndUpdate(id, { title, origin, destination, date, duration, typePlan, image, description })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
