@@ -26,6 +26,9 @@ const planSchema = new Schema(
             ref: 'typePlan',
             type: Schema.Types.ObjectId,
         },
+        image: {
+            type: String,
+        },
         description: {
             type: String,
             required: [true, 'La descripción es obligatoria.'],
