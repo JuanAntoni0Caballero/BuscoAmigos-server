@@ -51,9 +51,6 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
     const { conversation_id } = req.params
     const { _id: user_id } = req.payload
 
-
-
-
     Conversation
         .findById(conversation_id)
         .populate({
