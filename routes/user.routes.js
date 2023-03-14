@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { response } = require("../app")
 const { verifyToken } = require("../middlewares/verifyToken")
 const User = require('../models/User.model')
+const Plan = require('../models/Plan.model')
 
 router.get("/getUsers", verifyToken, (req, res, next) => {
 
@@ -21,6 +22,7 @@ router.get("/getOneUser/:user_id", verifyToken, (req, res, next) => {
 
     User
         .findById(user_id)
+        .populate('plans')
         .then(response => res.json(response))
         .catch(err => next(err))
 })
