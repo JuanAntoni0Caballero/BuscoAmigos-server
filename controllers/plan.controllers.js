@@ -1,16 +1,13 @@
 const Plan = require('./../models/Plan.model')
 const TypePlan = require('./../models/TypePlan.model')
 const User = require('./../models/User.model')
+const GetDateToFilter = require('./../utils/GetDate')
+const getDate = require('./../utils/GetDate')
+
 
 const getRandomPlans = (req, res, next) => {
 
-
-    const currentDate = new Date()
-    const year = currentDate.getFullYear()
-    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2)
-    const day = ("0" + (currentDate.getDate())).slice(-2)
-    const fecha = `${year}-${month}-${day}`
-    console.log("QUIEN ES LA FECHA", fecha)
+    const dateFilter = GetDateToFilter()
 
 
     Plan
@@ -18,7 +15,7 @@ const getRandomPlans = (req, res, next) => {
             ,
         {
             $match: {
-                date: { $gte: fecha }
+                date: { $gte: dateFilter }
             }
         },
         ])
@@ -41,11 +38,8 @@ const getRandomPlans = (req, res, next) => {
 const getPlans = (req, res, next) => {
 
     const { origin, destination, date, duration, typePlan, sortOrigin, sortDestination, sortDate, sortDuration } = req.query
-    const currentDate = new Date()
-    const year = currentDate.getFullYear()
-    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2)
-    const day = ("0" + (currentDate.getDate())).slice(-2)
-    const fecha = `${year}-${month}-${day}`
+
+    const dateFilter = GetDateToFilter()
 
     let filter = {}
 
@@ -56,7 +50,7 @@ const getPlans = (req, res, next) => {
     if (date) {
         filter.date = date
     } else {
-        filter.date = { $gte: fecha }
+        filter.date = { $gte: dateFilter }
     }
 
     let sort = {}
