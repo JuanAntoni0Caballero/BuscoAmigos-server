@@ -9,10 +9,28 @@ const User = require('./../models/User.model')
 
 router.get("/getRandomPlans", (req, res, next) => {
 
+
+    const currentDate = new Date()
+    const year = currentDate.getFullYear()
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2)
+    const day = ("0" + (currentDate.getDate())).slice(-2)
+    const fecha = `${year}-${month}-${day}`
+
+
     Plan
-        .aggregate([{ $sample: { size: 20 } }])
+        .aggregate([{ $sample: { size: 20 } }
+            ,
+        {
+            $match: {
+                date: { $gte: new Date(fecha) }
+            }
+        }
+        ])
         .then(response => {
-            const promises = response.map(elm => Plan.findById(elm._id).populate('typePlan'))
+            const promises = response.map(elm =>
+                Plan
+                    .findById(elm._id)
+                    .populate('typePlan'))
             Promise
                 .all(promises)
                 .then((plans) => res.json(plans))
@@ -25,14 +43,23 @@ router.get("/getRandomPlans", (req, res, next) => {
 router.get("/getPlans", (req, res, next) => {
 
     const { origin, destination, date, duration, typePlan, sortOrigin, sortDestination, sortDate, sortDuration } = req.query
+    const currentDate = new Date()
+    const year = currentDate.getFullYear()
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2)
+    const day = ("0" + (currentDate.getDate())).slice(-2)
+    const fecha = `${year}-${month}-${day}`
 
     let filter = {}
 
     if (origin) filter.origin = origin
     if (destination) filter.destination = destination
-    if (date) filter.date = date
     if (duration) filter.duration = duration
     if (typePlan) filter.typePlan = typePlan
+    if (date) {
+        filter.date = date
+    } else {
+        filter.date = { $gte: fecha }
+    }
 
     let sort = {}
 
