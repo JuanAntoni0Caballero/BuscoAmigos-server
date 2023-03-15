@@ -28,6 +28,7 @@ const planSchema = new Schema(
         },
         image: {
             type: String,
+            default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/v1678120897/BuscoAmigos/playa.jpg'
         },
         description: {
             type: String,
