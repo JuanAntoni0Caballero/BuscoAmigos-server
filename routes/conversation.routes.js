@@ -66,7 +66,6 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
                 res.status(400).json({ errorMessages: ["Conversación no encontrada."] })
                 return
             }
-
             const promises = response.messages.map(elm => {
 
                 if (user_id != elm.owner._id && !elm.read) {
@@ -74,7 +73,6 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
                 } else {
                     return Message.findById(elm._id)
                 }
-                res.json(response)
             })
 
             return Promise.all(promises)
@@ -92,7 +90,7 @@ router.get("/getConversation/:conversation_id", verifyToken, (req, res, next) =>
                 }
             })
         )
-        .then(response => res.json(response))
+        .then(response => res.status(200).json(response))
         .catch(err => next(err))
 })
 
