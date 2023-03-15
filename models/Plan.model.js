@@ -5,6 +5,7 @@ const planSchema = new Schema(
         title: {
             type: String,
             required: [true, 'El nombre es obligatorio.'],
+            maxlength: [50, 'El título puede tener hasta 50 caracteres']
         },
         origin: {
             type: String,

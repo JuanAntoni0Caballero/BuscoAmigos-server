@@ -24,7 +24,7 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/v1678120993/BuscoAmigos/default.jpg'
+      default: 'https://res.cloudinary.com/dulqf7f1b/image/upload/v1678901853/BuscoAmigos/Icon/icon-yellow-2.png'
     },
     role: {
       type: String,

@@ -9,7 +9,6 @@ const getRandomPlans = (req, res, next) => {
 
     const dateFilter = GetDateToFilter()
 
-
     Plan
         .aggregate([{ $sample: { size: 20 } }
             ,
@@ -20,15 +19,14 @@ const getRandomPlans = (req, res, next) => {
         },
         ])
         .then(response => {
-            res.status(200).json(response)
-            // const promises = response.map(elm =>
-            //     Plan
-            //         .findById(elm._id)
-            //         .populate('typePlan'))
-            // Promise
-            //     .all(promises)
-            //     .then((plans) => res.json(plans))
-            //     .catch(err => next(err))
+            const promises = response.map(elm =>
+                Plan
+                    .findById(elm._id)
+                    .populate('typePlan owner'))
+            Promise
+                .all(promises)
+                .then((plans) => res.json(plans))
+                .catch(err => next(err))
         })
         .catch(err => next(err))
 }
@@ -63,7 +61,7 @@ const getPlans = (req, res, next) => {
     Plan
         .find(filter)
         .sort(sort)
-        .populate('typePlan')
+        .populate('typePlan owner')
         .then(response => res.json(response))
         .catch(err => next(err))
 }
