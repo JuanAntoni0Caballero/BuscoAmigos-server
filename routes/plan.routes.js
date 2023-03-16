@@ -16,7 +16,6 @@ const {
     deletePlan
 } = require("../controllers/plan.controllers")
 
-
 router.get("/getRandomPlans", getRandomPlans)
 router.get("/getPlans", getPlans)
 router.get("/getMyPlans", verifyToken, getMyPlans)
@@ -27,8 +26,5 @@ router.get("/getTypePlan", getTypePlan)
 router.post("/createPlan", verifyToken, createPlan)
 router.put("/editPlan/:plan_id", verifyToken, editPlan)
 router.delete('/deletePlan/:plan_id', verifyToken, deletePlan)
-
-
-
 
 module.exports = router

@@ -10,7 +10,7 @@ const getRandomPlans = (req, res, next) => {
     const dateFilter = GetDateToFilter()
 
     Plan
-        .aggregate([{ $sample: { size: 20 } }
+        .aggregate([{ $sample: { size: 12 } }
             ,
         {
             $match: {

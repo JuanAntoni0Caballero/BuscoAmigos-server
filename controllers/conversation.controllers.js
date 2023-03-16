@@ -14,7 +14,7 @@ const createConversation = (req, res, next) => {
             const receiver = plan.owner
 
             Conversation
-                .findOne({ $and: [{ members: sender }, { members: receiver }] })
+                .findOne({ $and: [{ members: sender }, { members: receiver }, { plan: plan_id }] })
                 .then(conversation => {
                     if (conversation) {
                         res.json(conversation)
@@ -61,11 +61,13 @@ const getConversation = (req, res, next) => {
             }
         })
         .then(response => {
+
             if (!response) {
                 res.status(400).json({ errorMessages: ["Conversación no encontrada."] })
                 return
             }
-            const promises = response.messages.map(elm => {
+
+            const promises = response.messages?.map(elm => {
 
                 if (user_id != elm.owner._id && !elm.read) {
                     return Message.findByIdAndUpdate(elm._id, { read: true }, { new: true })
@@ -109,5 +111,4 @@ module.exports = {
     getAllConversations,
     getConversation,
     deleteConversation
-
 }
