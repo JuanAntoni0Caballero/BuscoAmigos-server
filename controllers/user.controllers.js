@@ -1,6 +1,7 @@
 const User = require('../models/User.model')
 const jwt = require('jsonwebtoken')
 
+
 const getUsers = (req, res, next) => {
 
     User
@@ -72,14 +73,10 @@ const deleteUser = (req, res, next) => {
         .catch(err => next(err))
 }
 
-
-
-
 module.exports = {
     getUsers,
     getOneUser,
     profile,
     editUser,
     deleteUser
-
 }
