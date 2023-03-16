@@ -1,5 +1,6 @@
 const User = require('../models/User.model')
 const Plan = require('../models/Plan.model')
+const jwt = require('jsonwebtoken')
 
 
 const getUsers = (req, res, next) => {
