@@ -69,7 +69,7 @@ const getConversation = (req, res, next) => {
 
             const promises = response.messages?.map(elm => {
 
-                if (user_id != elm.owner._id && !elm.read) {
+                if (user_id != elm.owner._id) {
                     return Message.findByIdAndUpdate(elm._id, { read: true }, { new: true })
                 } else {
                     return Message.findById(elm._id)
