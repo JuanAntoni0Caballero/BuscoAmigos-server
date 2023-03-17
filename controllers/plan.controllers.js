@@ -99,6 +99,7 @@ const getOriginPlan = (req, res, next) => {
 
     Plan
         .find()
+        .sort({ origin: 1 })
         .then(response => {
             response.map(elm => originArray.push(elm.origin))
             return originArray.filter(function (value, index, self) {
@@ -116,6 +117,7 @@ const getDestinationPlan = (req, res, next) => {
 
     Plan
         .find()
+        .sort({ destination: 1 })
         .then(response => {
             response.map(elm => destinationArray.push(elm.destination))
             return destinationArray.filter(function (value, index, self) {
@@ -136,7 +138,6 @@ const getTypePlan = (req, res, next) => {
 }
 
 
-
 const createPlan = (req, res, next) => {
 
     const { title, origin, destination, date, duration, typePlan, image, description } = req.body
@@ -144,11 +145,10 @@ const createPlan = (req, res, next) => {
 
     Plan
         .create({ title, origin, destination, date, duration, typePlan, image, description, owner })
-        // .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
+        .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
         .then(response => res.json(response))
         .catch(err => next(err))
 }
-
 
 
 const editPlan = (req, res, next) => {
