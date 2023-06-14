@@ -32,7 +32,6 @@ const getRandomPlans = (req, res, next) => {
 }
 
 
-
 const getPlans = (req, res, next) => {
 
     const { origin, destination, date, duration, typePlan, sortOrigin, sortDestination, sortDate, sortDuration } = req.query
@@ -67,7 +66,6 @@ const getPlans = (req, res, next) => {
 }
 
 
-
 const getMyPlans = (req, res, next) => {
 
     const { _id: owner_id } = req.payload
@@ -97,8 +95,12 @@ const getOriginPlan = (req, res, next) => {
 
     let originArray = []
 
+    const dateFilter = GetDateToFilter()
+    let filter = {}
+    filter.date = { $gte: dateFilter }
+
     Plan
-        .find()
+        .find(filter)
         .sort({ origin: 1 })
         .then(response => {
             response.map(elm => originArray.push(elm.origin))
@@ -115,8 +117,12 @@ const getDestinationPlan = (req, res, next) => {
 
     let destinationArray = []
 
+    const dateFilter = GetDateToFilter()
+    let filter = {}
+    filter.date = { $gte: dateFilter }
+
     Plan
-        .find()
+        .find(filter)
         .sort({ destination: 1 })
         .then(response => {
             response.map(elm => destinationArray.push(elm.destination))
@@ -145,8 +151,8 @@ const createPlan = (req, res, next) => {
 
     Plan
         .create({ title, origin, destination, date, duration, typePlan, image, description, owner })
-        .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
         .then(response => res.json(response))
+        .then(response => User.findByIdAndUpdate(owner, { $push: { plan: response._id } }, { new: true }))
         .catch(err => next(err))
 }
 
