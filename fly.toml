@@ -5,4 +5,9 @@ primary_region = "mad"
   builder = "paketobuildpacks/builder:base"
   buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
 
+[build]
+  image = "flyio/hellofly:latest"
+
+[build]
+  dockerfile = "Dockerfile.test"
 
