@@ -2,12 +2,6 @@ app='buscoamigos'
 primary_region = "mad"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
-
-[build]
   image = "flyio/hellofly:latest"
 
-[build]
-  dockerfile = "Dockerfile.test"
 
